@@ -1,32 +1,32 @@
-# 歧义句分类与模型训练工具包
+# Ambiguity Sentence Classification and Model Training Toolkit
 
-一个基于 Python 和 Transformers 的中文歧义句检测工具，提供从数据预处理、特征增强到模型训练、评估、预测的完整流程。
-
----
-
-## 功能亮点
-
-* **数据增强**
-  使用 `jieba.posseg` 提取词性信息，丰富输入特征。
-
-* **数据集划分**
-  按照类别分布，划分训练、验证、测试集，确保平衡。
-
-* **模型支持**
-  基于 `hfl/Chinese-RoBERTa-wwm-ext` 等预训练模型进行二分类任务。
-
-* **训练与早停**
-  使用 AdamW 优化器、学习率调度器，带有早停机制防止过拟合。
-
-* **详细评估**
-  提供准确率、精确率、召回率、F1 分数，输出混淆矩阵与错误分析。
-
-* **预测与保存**
-  可单句预测歧义性，支持模型与分词器保存和加载。
+A Python-based ambiguity sentence detection tool using Transformers, tailored for Chinese text, covering the entire process from data preprocessing and feature enrichment to model training, evaluation, and prediction.
 
 ---
 
-## 环境依赖
+## Key Features
+
+* **Data Augmentation**
+  Utilizes `jieba.posseg` for part-of-speech tagging to enrich input features.
+
+* **Dataset Splitting**
+  Splits data into training, validation, and test sets based on category distribution to ensure balance.
+
+* **Model Support**
+  Supports binary classification tasks using pre-trained models like `hfl/Chinese-RoBERTa-wwm-ext`.
+
+* **Training with Early Stopping**
+  Uses AdamW optimizer, learning rate schedulers, and early stopping mechanisms to prevent overfitting.
+
+* **Detailed Evaluation**
+  Provides metrics such as accuracy, precision, recall, F1 score, outputs confusion matrices, and error analysis.
+
+* **Prediction and Saving**
+  Supports single-sentence prediction of ambiguity, with model and tokenizer saving and loading capabilities.
+
+---
+
+## Environment Dependencies
 
 * Python 3.8+
 * PyTorch
@@ -37,7 +37,7 @@
 * pandas
 * tqdm
 
-安装依赖：
+Install dependencies:
 
 ```bash
 pip install torch transformers scikit-learn jieba numpy pandas tqdm
@@ -45,27 +45,25 @@ pip install torch transformers scikit-learn jieba numpy pandas tqdm
 
 ---
 
-## 使用方法
+## Usage
 
-### 运行完整训练流程
+### Running the Full Training Process
 
 ```bash
 python main.py
 ```
 
-配置参数：
+Configuration Parameters:
 
-* `data_file`: 数据文件（CSV 格式）
-* `model_name`: 预训练模型名称（如 hfl/Chinese-RoBERTa-wwm-ext）
-* `output_dir`: 模型保存目录
+* `data_file`: CSV file containing data
+* `model_name`: Pre-trained model name (e.g., hfl/Chinese-RoBERTa-wwm-ext)
+* `output_dir`: Directory to save trained models
 
-### 示例调用
-
-在代码中调用：
+### Example Call in Code
 
 ```python
 model, tokenizer, error_analysis = run_training_pipeline(
-    data_file="提取后的数据集.csv",
+    data_file="processed_dataset.csv",
     model_name="hfl/Chinese-RoBERTa-wwm-ext",
     output_dir="./ambiguity_detection_model_FINAL",
     num_epochs=10,
@@ -75,7 +73,7 @@ model, tokenizer, error_analysis = run_training_pipeline(
 )
 ```
 
-### 单句预测
+### Single Sentence Prediction
 
 ```python
 result, prob, ambig_prob, non_ambig_prob = predict_ambiguity(text, model, tokenizer)
@@ -83,29 +81,28 @@ result, prob, ambig_prob, non_ambig_prob = predict_ambiguity(text, model, tokeni
 
 ---
 
-## 核心参数说明
+## Core Parameters
 
-| 参数              | 描述      |
-| --------------- | ------- |
-| `num_epochs`    | 训练轮数    |
-| `batch_size`    | 批次大小    |
-| `learning_rate` | 学习率     |
-| `weight_decay`  | 权重衰减    |
-| `model_name`    | 预训练模型名称 |
-
----
-
-## 输出内容
-
-* **模型文件**：保存训练好的模型与分词器。
-* **评估报告**：测试集指标与部分错误样本分析。
-* **预测接口**：用于新样本的歧义性预测。
+| Parameter       | Description                   |
+| --------------- | ----------------------------- |
+| `num_epochs`    | Number of epochs for training |
+| `batch_size`    | Batch size for training       |
+| `learning_rate` | Learning rate for optimizer   |
+| `weight_decay`  | Weight decay for optimizer    |
+| `model_name`    | Name of pre-trained model     |
 
 ---
 
-## 注意事项
+## Output
 
-* 需 GPU 设备以获得最佳训练性能。
-* 数据文件需包含列：`歧义句`、`歧义句及上下文`、`歧义句消岐1`、`歧义句消岐2`。
-* 可根据实际需求调整超参数和早停策略。
+* **Model Files**: Saved trained models and tokenizers.
+* **Evaluation Report**: Metrics on test set and analysis of error samples.
+* **Prediction Interface**: Interface for predicting ambiguity in new samples.
 
+---
+
+## Notes
+
+* GPU acceleration is recommended for optimal training performance.
+* Data file should include columns: `ambiguous_sentence`, `ambiguous_sentence_with_context`, `ambiguous_option1`, `ambiguous_option2`.
+* Adjust hyperparameters and early stopping strategies based on specific requirements.
