@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: LLM-Chinese-Textual-Disambiguation
+message: If you use this repository, please cite it as below.
+authors:
+  - family-names: Li
+    given-names: Haojie
+    affiliation: Chalmers
+date-released: 2025-08-14
+version: '0.1.0'
+repository-code: 'https://github.com/ictup/LLM-Chinese-Textual-Disambiguation'
